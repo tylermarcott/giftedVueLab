@@ -3,10 +3,10 @@ import { baseURL } from '../env'
 import { logger } from '../utils/Logger.js'
 import axios from 'axios'
 
-export const gifApi = axios.create({
-  baseURL: 'https://sandbox.codeworksacademy.com/api/gifts',
-  timeout: 8000
-})
+// export const gifApi = axios.create({
+//   baseURL: 'https://sandbox.codeworksacademy.com/api',
+//   timeout: 8000
+// })
 
 export const api = Axios.create({
   baseURL,

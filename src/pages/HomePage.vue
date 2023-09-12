@@ -1,21 +1,12 @@
 <template>
-  <GifCard />
-
-
-  <!-- TODO: first I'm just going to try to get one gif to the page -->
-  <!-- where are we getting access to the gif..? -->
-
-
   <div class="container-fluid">
     <div class="row">
-      <section class="col-6 col-md-4 gif-card">
-        <div>
-          <img class="img-fluid"
-            src="https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
-            alt="gif-image">
-        </div>
-        <p>Gif summary goes here!</p>
-      </section>
+      <!-- v-for is the for loop that is grabbing the single object 'gift' from the gifts array specifically by its id -->
+      <div v-for="gift in gifts" :key="gift.id" class="col-6 col-md-4 gif-card">
+        <!-- the bound prop ':gift' HAS TO match whats on the child component -->
+        <!-- the bound prop ALSO has to equal the single object 'gift' that we grabbed from the array in the v-for -->
+        <GiftCard :gift="gift" />
+      </div>
     </div>
   </div>
 </template>
@@ -23,20 +14,26 @@
 <script>
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
-import { gifService } from '../services/GifService.js'
+import { giftService } from '../services/GiftService.js'
+import { computed, onMounted } from "vue";
+import { AppState } from "../AppState.js"
+
 
 
 
 
 export default {
+
   setup() {
+
+    onMounted(getGifts)   // this is similar to a constructor. onMounted will run this code as soon as the page loads
 
     // TODO: first thing I want to do is try to get a gif to the screen!
 
-    async function getGifs() {
+    async function getGifts() {
       try {
         logger.log('getting some gifs!')
-        await gifService.getGifs()
+        await giftService.getGifts()
 
       } catch (error) {
         Pop.error(error)
@@ -51,7 +48,9 @@ export default {
 
 
     return {
-      getGifs
+      getGifts,
+      gifts: computed(() => AppState.gifts) // this is similar to MVC Appstate.on, it listens to changes in the appstate.
+
 
     }
   }
@@ -85,3 +84,4 @@ export default {
   }
 }
 </style>
+../services/GiftService.js
