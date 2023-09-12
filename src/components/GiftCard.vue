@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="img-fluid" :src="gift.url" alt="gif-image" @click="openGift()">
+    <img class="img-fluid image" :src="gift.url" alt="gif-image" @click="openGift()">
   </div>
   <p>{{ gift.tag }}</p>
   <p>Is this gift opened: {{ gift.opened }}</p>
@@ -40,7 +40,7 @@ export default {
 
 <style>
 .image {
-  max-height: 30vh;
+  cursor: pointer;
 }
 
 .gif-card {

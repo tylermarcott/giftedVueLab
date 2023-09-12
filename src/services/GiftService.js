@@ -36,6 +36,16 @@ class GiftService {
 
     logger.log('this is the new gift', newGift)
   }
+
+
+  async createGift(body) {
+    const res = await api.post('/gifts/', body)
+
+
+  }
+
+
+
 }
 
 

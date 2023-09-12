@@ -1,5 +1,10 @@
 <template>
   <div class="container-fluid">
+
+    <!-- TODO: have to create a form so I can submit data to do a gift post -->
+
+    <button class="button" @click="createGifts()">Create Gift!</button>
+
     <div class="row">
       <!-- v-for is the for loop that is grabbing the single object 'gift' from the gifts array specifically by its id -->
       <div v-for="gift in gifts" :key="gift.id" class="col-6 col-md-4 gif-card">
@@ -46,12 +51,18 @@ export default {
 
 
 
-
     return {
       getGifts,
-      gifts: computed(() => AppState.gifts) // this is similar to MVC Appstate.on, it listens to changes in the appstate.
+      gifts: computed(() => AppState.gifts), // this is similar to MVC Appstate.on, it listens to changes in the appstate.
 
-
+      async createGifts(body) {
+        try {
+          logger.log('creating a gift')
+          await giftService.createGift(body)
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
     }
   }
 }
@@ -82,6 +93,10 @@ export default {
       object-position: center;
     }
   }
+}
+
+.button {
+  border-radius: 14px;
 }
 </style>
 ../services/GiftService.js
