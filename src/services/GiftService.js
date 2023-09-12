@@ -22,28 +22,20 @@ class GiftService {
 
   async openGift(giftId) {
 
-    let foundGift = AppState.gifts.find(gift => gift.id == giftId)
+    let foundGift = AppState.gifts.find(gift => gift.id == giftId)  //first, find the gift with the gift where the id we are passing equals the one in our appstate
 
-    logger.log('this is our found gift', foundGift)
+    foundGift.opened = true //set the opened property of the gift we found and set it equal to true
 
-    foundGift.opened = true
+    const res = await api.put(`/api/gifts/${giftId}`, foundGift) // send the edited found gift to the corresponding url with the proper id
 
-    const res = await api.put(`/api/gifts/${giftId}`, foundGift)
+    let newGift = new Gift(res.data) // alias out a new instance of our gift class and pass in our res.data which is our edited api model
 
-    let newGift = new Gift(res.data)
+    let foundGiftindex = AppState.gifts.indexOf(foundGift)  // find the index of the our found gift, so we know where to put it in our array/ which existing gift to replace
 
-    let foundGiftindex = foundGift.indexOf()
-
-    AppState.gifts.splice(foundGiftindex, 1, newGift)
+    AppState.gifts.splice(foundGiftindex, 1, newGift) // splice gifts. Take the object at the index of the array, which will be our old gift, and replace one instance, and replace it with our new gift from our put
 
     logger.log('this is the new gift', newGift)
   }
-
-
-
-
-
-
 }
 
 
