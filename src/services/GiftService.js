@@ -38,6 +38,8 @@ class GiftService {
   }
 
 
+  // NOTE: have to create a form to take in the data for the new gif.
+
   async createGift(body) {
     const res = await api.post('/gifts/', body)
 
